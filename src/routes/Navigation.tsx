@@ -1,37 +1,41 @@
 
-import { BrowserRouter, Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages';
+import { NavLink, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { ShoppingPage } from '../02-component-patterns/pages/ShoppingPage';
 import logo from '../logo.svg';
 
 export const Navigation = () => {
   return (
-    <BrowserRouter>
+    <Router>
       <div className="main-layout">
         <nav>
             <img src={ logo } alt="React Logo" />
           <ul>
             <li>
-              <NavLink to="/lazy1" className={ ({ isActive }) => isActive ? 'nav-active' : '' } >Lazy1</NavLink>
+              <NavLink to="/" activeClassName="nav-active" exact>Shopping</NavLink>
             </li>
             <li>
-              <NavLink to="/lazy2" className={ ({ isActive }) => isActive ? 'nav-active' : '' }>Lazy2</NavLink>
+              <NavLink to="/about" activeClassName="nav-active" exact>About</NavLink>
             </li>
             <li>
-              <NavLink to="/lazy3" className={ ({ isActive }) => isActive ? 'nav-active' : '' }>Lazy3</NavLink>
+              <NavLink to="/users" activeClassName="nav-active" exact>Users</NavLink>
             </li>
           </ul>
         </nav>
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-        <Routes>
-          <Route path="lazy1" element={ <LazyPage1 /> } />
-          <Route path="lazy2" element={ <LazyPage2 /> } />
-          <Route path="lazy3" element={ <LazyPage3 /> } />
-
-          <Route path="/*" element={ <Navigate to="/lazy1" replace /> } />
-        </Routes>
+        <Switch>
+          <Route path="/about">
+            <h1>About</h1>
+          </Route>
+          <Route path="/users">
+            <h1>Users</h1>
+          </Route>
+          <Route path="/">
+            <ShoppingPage />
+          </Route>
+        </Switch>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
